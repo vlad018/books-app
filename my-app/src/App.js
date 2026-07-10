@@ -23,7 +23,7 @@ const [page, setPage] = useState("feed");
 
     async function loadBooks() {
       const res = await fetch(
-        `http://localhost:3001/books?search=${search}`,
+        fetch(`https://books-app-oyal.onrender.com/books?search=${search}`),
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -49,7 +49,7 @@ if (Array.isArray(data)) {
   }, [search, token]);
 async function getMe(jwt) {
   const res = await fetch(
-    "http://localhost:3001/auth/me",
+   fetch("https://books-app-oyal.onrender.com/auth/me"),
     {
       headers: {
         Authorization: `Bearer ${jwt}`,
@@ -67,7 +67,7 @@ async function getMe(jwt) {
 async function register(email, password) {
 
   const res = await fetch(
-    "http://localhost:3001/auth/register",
+    "https://books-app-oyal.onrender.com/auth/register",
     {
       method: "POST",
 
@@ -94,7 +94,7 @@ async function register(email, password) {
 
   async function login() {
     const res = await fetch(
-      "http://localhost:3001/auth/login",
+      "https://books-app-oyal.onrender.com/auth/login",
       {
         method: "POST",
 
@@ -129,7 +129,7 @@ async function register(email, password) {
     
   async function create(title, status) {
   const res = await fetch(
-    "http://localhost:3001/books",
+    "https://books-app-oyal.onrender.com/books",
     {
       method: "POST",
 
