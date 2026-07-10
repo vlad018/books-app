@@ -4,9 +4,11 @@ export default function Profile({ token, user }) {
   const [myBooks, setMyBooks] = useState([]);
 
   useEffect(() => {
+    if (!token) return;
+
     async function getMyBooks() {
       const res = await fetch(
-        "http://localhost:3001/books/my-books",
+        "https://books-app-oyal.onrender.com/books/my-books",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -16,16 +18,22 @@ export default function Profile({ token, user }) {
 
       const data = await res.json();
 
-      setMyBooks(data);
+      if (Array.isArray(data)) {
+        setMyBooks(data);
+      } else {
+        setMyBooks([]);
+      }
     }
 
     getMyBooks();
   }, [token]);
 
+  if (!user) {
+    return <h2>Загрузка профиля...</h2>;
+  }
 
   return (
     <div>
-
       <h2>👤 Профиль</h2>
 
       <p>ID: {user.id}</p>
@@ -34,9 +42,7 @@ export default function Profile({ token, user }) {
 
       <p>Роль: {user.role}</p>
 
-
       <h2>📚 Мои книги</h2>
-
 
       {myBooks.map((book) => (
         <div
@@ -48,21 +54,13 @@ export default function Profile({ token, user }) {
             borderRadius: "10px",
           }}
         >
-
           <h3>{book.title}</h3>
 
-          <p>
-            Статус: {book.status}
-          </p>
+          <p>Статус: {book.status}</p>
 
-          <p>
-            Создана: {book.createdAt}
-          </p>
-
+          <p>Создана: {book.createdAt}</p>
         </div>
       ))}
-
-
     </div>
   );
 }

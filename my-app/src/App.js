@@ -18,38 +18,37 @@ const [page, setPage] = useState("feed");
   const [books, setBooks] = useState([]);
   const [search, setSearch] = useState("");
 
-  useEffect(() => {
-    if (!token) return;
+useEffect(() => {
+  if (!token) return;
 
-    async function loadBooks() {
-      const res = await fetch(
-        fetch(`https://books-app-oyal.onrender.com/books?search=${search}`),
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+  async function loadBooks() {
+    const res = await fetch(
+      `https://books-app-oyal.onrender.com/books?search=${search}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
     const data = await res.json();
 
-console.log(data);
+    console.log(data);
 
-if (Array.isArray(data)) {
-  setBooks(data);
-} else {
-  console.log(data);
-  setBooks([]);
-}
-
-    
+    if (Array.isArray(data)) {
+      setBooks(data);
+    } else {
+      console.log(data);
+      setBooks([]);
     }
+  }
 
-    loadBooks();
-  }, [search, token]);
+  loadBooks();
+}, [search, token]);
+
 async function getMe(jwt) {
   const res = await fetch(
-   fetch("https://books-app-oyal.onrender.com/auth/me"),
+    "https://books-app-oyal.onrender.com/auth/me",
     {
       headers: {
         Authorization: `Bearer ${jwt}`,
@@ -57,8 +56,9 @@ async function getMe(jwt) {
     }
   );
 
-
   const data = await res.json();
+
+  console.log(data);
 
   setUser(data);
 }
@@ -114,6 +114,7 @@ async function register(email, password) {
 
    if (data.access_token) {
   setToken(data.access_token);
+  console.log("TOKEN:", data.access_token);
 
   await getMe(data.access_token);
 

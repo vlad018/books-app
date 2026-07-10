@@ -9,10 +9,9 @@ async function bootstrap() {
  
   app.use(helmet());
 
-  app.enableCors({
-  origin: 'http://localhost:3000',
+app.enableCors({
+  origin: 'https://books-app-six-mu.vercel.app',
 });
-
  const config = new DocumentBuilder()
   .setTitle('Books API')
   .setDescription('Документация API')
